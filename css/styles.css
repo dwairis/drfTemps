@@ -1,0 +1,20 @@
+.step {
+    display: none;
+  }
+  
+  .step.active {
+    display: block;
+  }
+  
+  .progress-bar {
+    width: 20%;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  .valid {
+    color: green;
+  }
+  

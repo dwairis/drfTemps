@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Request Form</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    .progress-bar {
+      width: 20%;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+    @media (max-width: 767px) {
+      .progress-bar {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Data Request Form</h2>
+    <div class="progress mb-4">
+      <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <form id="multiStepForm">
+      <!-- Step 1: Basic Information -->
+      <div class="step active">
+        <h4>Basic Information</h4>
+        <div class="form-group">
+          <label for="organization">Organization</label>
+          <input type="text" class="form-control" id="organization" name="organization">
+          <span class="error" id="organizationError"></span>
+        </div>
+        <div class="form-group">
+          <label for="organizationType">Organization Type</label>
+          <select class="form-control" id="organizationType" name="organizationType">
+            <option value="">Select</option>
+            <option value="Govt">Govt</option>
+            <option value="Private Sector">Private Sector</option>
+            <option value="LINGO">LINGO</option>
+          </select>
+          <span class="error" id="organizationTypeError"></span>
+        </div>
+        <div class="form-group">
+          <label for="programTitle">Program Title</label>
+          <input type="text" class="form-control" id="programTitle" name="programTitle">
+          <span class="error" id="programTitleError"></span>
+        </div>
+        <div class="form-group">
+          <label for="donor">Donor</label>
+          <input type="text" class="form-control" id="donor" name="donor">
+          <span class="error" id="donorError"></span>
+        </div>
+        <div class="form-group">
+          <label for="partners">Partners</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="partner1" name="partners" value="1">
+            <label class="form-check-label" for="partner1">Partner 1</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="partner2" name="partners" value="2">
+            <label class="form-check-label" for="partner2">Partner 2</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="partner3" name="partners" value="3">
+            <label class="form-check-label" for="partner3">Partner 3</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="partner4" name="partners" value="4">
+            <label class="form-check-label" for="partner4">Partner 4</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="partner5" name="partners" value="5">
+            <label class="form-check-label" for="partner5">Partner 5</label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+      </div>
+      <!-- Step 2: Program Details -->
+      <div class="step">
+        <h4>Program Details</h4>
+        <div class="form-group">
+          <label for="targetSectors">Target Sectors</label>
+          <input type="text" class="form-control" id="targetSectors" name="targetSectors">
+          <span class="error" id="targetSectorsError"></span>
+        </div>
+        <div class="form-group">
+          <label for="briefProgram">Brief on Program</label>
+          <textarea class="form-control" id="briefProgram" name="briefProgram" rows="3"></textarea>
+          <span class="error" id="briefProgramError"></span>
+        </div>
+        <div class="form-group">
+          <label for="totalTarget">Total Target</label>
+          <input type="number" class="form-control" id="totalTarget" name="totalTarget">
+          <span class="error" id="totalTargetError"></span>
+        </div>
+        <div class="form-group">
+          <label for="projectStart">Project Start</label>
+          <input type="date" class="form-control" id="projectStart" name="projectStart">
+          <span class="error" id="projectStartError"></span>
+        </div>
+        <div class="form-group">
+          <label for="projectEnd">Project End</label>
+          <input type="date" class="form-control" id="projectEnd" name="projectEnd">
+          <span class="error" id="projectEndError"></span>
+        </div>
+        <div class="form-group">
+          <label for="targetRequest">Target Request</label>
+          <input type="number" class="form-control" id="targetRequest" name="targetRequest">
+          <span class="error" id="targetRequestError"></span>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+      </div>
+      <!-- Step 3: Criteria and Referrals -->
+      <div class="step">
+        <h4>Criteria and Referrals</h4>
+        <div class="form-group">
+          <label for="criteria">Criteria</label>
+          <textarea class="form-control" id="criteria" name="criteria" rows="3"></textarea>
+          <span class="error" id="criteriaError"></span>
+        </div>
+        <div class="form-group">
+          <label for="referralDeliveryDeadline">Referral Delivery Deadline</label>
+          <input type="date" class="form-control" id="referralDeliveryDeadline" name="referralDeliveryDeadline">
+          <span class="error" id="referralDeliveryDeadlineError"></span>
+        </div>
+        <div class="form-group">
+          <label for="referralsTotal">Referrals Total</label>
+          <input type="number" class="form-control" id="referralsTotal" name="referralsTotal">
+          <span class="error" id="referralsTotalError"></span>
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <input type="text" class="form-control" id="status" name="status">
+          <span class="error" id="statusError"></span>
+        </div>
+        <div class="form-group">
+          <label for="counterpart">Counterpart</label>
+          <select class="form-control" id="counterpart" name="counterpart">
+            <option value="">Select</option>
+            <option value="UNHCR">UNHCR</option>
+            <option value="WFP">WFP</option>
+          </select>
+          <span class="error" id="counterpartError"></span>
+        </div>
+        <div class="form-group">
+          <label for="statusActivityNotes">Status-Activity Notes</label>
+          <textarea class="form-control" id="statusActivityNotes" name="statusActivityNotes" rows="3"></textarea>
+          <span class="error" id="statusActivityNotesError"></span>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+      </div>
+      <!-- Step 4: Contact Information -->
+      <div class="step">
+        <h4>Contact Information</h4>
+        <div class="form-group">
+          <label for="contactPerson">Contact Person</label>
+          <input type="text" class="form-control" id="contactPerson" name="contactPerson">
+          <span class="error" id="contactPersonError"></span>
+        </div>
+        <div class="form-group">
+          <label for="hiredSelfEmployed">Hired/Self Employed</label>
+          <select class="form-control" id="hiredSelfEmployed" name="hiredSelfEmployed">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <span class="error" id="hiredSelfEmployedError"></span>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+      </div>
+      <!-- Step 5: Review and Submit -->
+      <div class="step">
+        <h4>Review and Submit</h4>
+        <div class="form-group">
+          <label><strong>Organization:</strong></label>
+          <p id="reviewOrganization"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Organization Type:</strong></label>
+          <p id="reviewOrganizationType"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Program Title:</strong></label>
+          <p id="reviewProgramTitle"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Donor:</strong></label>
+          <p id="reviewDonor"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Partners:</strong></label>
+          <p id="reviewPartners"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Target Sectors:</strong></label>
+          <p id="reviewTargetSectors"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Brief on Program:</strong></label>
+          <p id="reviewBriefProgram"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Total Target:</strong></label>
+          <p id="reviewTotalTarget"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Project Start:</strong></label>
+          <p id="reviewProjectStart"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Project End:</strong></label>
+          <p id="reviewProjectEnd"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Target Request:</strong></label>
+          <p id="reviewTargetRequest"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Criteria:</strong></label>
+          <p id="reviewCriteria"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Referral Delivery Deadline:</strong></label>
+          <p id="reviewReferralDeliveryDeadline"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Referrals Total:</strong></label>
+          <p id="reviewReferralsTotal"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Status:</strong></label>
+          <p id="reviewStatus"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Counterpart:</strong></label>
+          <p id="reviewCounterpart"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Status-Activity Notes:</strong></label>
+          <p id="reviewStatusActivityNotes"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Contact Person:</strong></label>
+          <p id="reviewContactPerson"></p>
+        </div>
+        <div class="form-group">
+          <label><strong>Hired/Self Employed:</strong></label>
+          <p id="reviewHiredSelfEmployed"></p>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form> <br><br><br>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    let currentStep = 0;
+    const steps = document.querySelectorAll('.step');
+    const progressBar = document.querySelector('.progress-bar');
+
+    function showStep(step) {
+      steps.forEach((el, index) => {
+        el.classList.toggle('active', index === step);
+      });
+      progressBar.style.width = `${(step + 1) * 20}%`;
+      if (step === steps.length - 1) {
+        fillReview();
+      }
+    }
+
+    function nextStep() {
+      const currentForm = $(steps[currentStep]).find('input, select, textarea');
+      let valid = true;
+      currentForm.each(function() {
+        const $this = $(this);
+        const id = $this.attr('id') + 'Error';
+        $('#' + id).text(''); // Clear previous error messages
+        
+        if (!$this.val()) {
+          $('#' + id).text('*This field is required');
+          valid = false;
+        } else {
+          // Custom validations
+          if ($this.attr('type') === 'number' && $this.val() <= 0) {
+            $('#' + id).text('*Must be a positive number');
+            valid = false;
+          }
+        }
+      });
+      if (valid && currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    }
+
+    function fillReview() {
+      $('#reviewOrganization').text($('#organization').val());
+      $('#reviewOrganizationType').text($('#organizationType').val());
+      $('#reviewProgramTitle').text($('#programTitle').val());
+      $('#reviewDonor').text($('#donor').val());
+      
+      const partners = $('input[name="partners"]:checked').map(function() {
+        return $(this).next('label').text();
+      }).get().join(', ');
+      $('#reviewPartners').text(partners);
+
+      $('#reviewTargetSectors').text($('#targetSectors').val());
+      $('#reviewBriefProgram').text($('#briefProgram').val());
+      $('#reviewTotalTarget').text($('#totalTarget').val());
+      $('#reviewProjectStart').text($('#projectStart').val());
+      $('#reviewProjectEnd').text($('#projectEnd').val());
+      $('#reviewTargetRequest').text($('#targetRequest').val());
+      $('#reviewCriteria').text($('#criteria').val());
+      $('#reviewReferralDeliveryDeadline').text($('#referralDeliveryDeadline').val());
+      $('#reviewReferralsTotal').text($('#referralsTotal').val());
+      $('#reviewStatus').text($('#status').val());
+      $('#reviewCounterpart').text($('#counterpart').val());
+      $('#reviewStatusActivityNotes').text($('#statusActivityNotes').val());
+      $('#reviewContactPerson').text($('#contactPerson').val());
+      $('#reviewHiredSelfEmployed').text($('#hiredSelfEmployed').val());
+    }
+
+    $('#multiStepForm').on('submit', function(event) {
+      const currentForm = $(steps[currentStep]).find('input, select, textarea');
+      let valid = true;
+      currentForm.each(function() {
+        const $this = $(this);
+        const id = $this.attr('id') + 'Error';
+        $('#' + id).text(''); // Clear previous error messages
+        
+        if (!$this.val()) {
+          $('#' + id).text('*This field is required');
+          valid = false;
+        } else {
+          // Custom validations
+          if ($this.attr('type') === 'number' && $this.val() <= 0) {
+            $('#' + id).text('*Must be a positive number');
+            valid = false;
+          }
+        }
+      });
+      if (!valid) {
+        event.preventDefault();
+      } else {
+        alert('Form submitted!');
+      }
+    });
+  </script>
+</body>
+</html>
